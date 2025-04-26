@@ -6,9 +6,9 @@ if (!isset($_SESSION['id'])) {
     exit();
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['foto'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['photo'])) {
     $userId = $_SESSION['id'];
-    $file = $_FILES['foto'];
+    $file = $_FILES['photo'];
     $uploadDir = __DIR__ . '/../assets/uploads/'; 
     $filename = time() . '_' . basename($file['name']);
     $targetPath = $uploadDir . $filename;

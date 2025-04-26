@@ -7,9 +7,9 @@
 }
 
 body {
-    background: linear-gradient(135deg, #272829,#272829);
+    background: linear-gradient(135deg, #272829, #272829);
     color: white;
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Poppins', sans-serif;
 }
 
 .logoh img {
@@ -51,7 +51,7 @@ body {
 .navbar-brand {
     font-size: 1.8em;
     font-weight: bold;
-    color: #636DA6 ;
+    color: #636DA6;
     text-transform: uppercase;
     letter-spacing: 1.5px;
 }
@@ -63,8 +63,9 @@ body {
 .navbar-toggler-icon {
     background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='white' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
 }
+
 .navbar-nav .nav-link {
-    color: white ;
+    color: white;
     font-size: 1em;
     font-weight: bold;
     transition: all 0.3s ease-in-out;
@@ -106,10 +107,10 @@ body {
     opacity: 1;
     visibility: visible;
 
-}  
+}
 
 .hero {
-    background: linear-gradient(135deg, #272829,#272829);
+    background: linear-gradient(135deg, #272829, #272829);
     color: white;
     text-align: center;
     padding: 50px 20px;
@@ -117,15 +118,16 @@ body {
     justify-content: center;
     align-items: center;
     height: 50vh;
-    
+
 }
 
 .hero-content {
     max-width: 600px;
 }
 
-.hero h6, h1 {
-    
+.hero h6,
+h1 {
+
     font-weight: bold;
     text-transform: uppercase;
     color: #ffffff;
@@ -141,25 +143,28 @@ body {
     font-family: 'Poppins', sans-serif;
 }
 
+
+ 
+  
+
 .features {
     position: fixed;
     top: 60px;
-    bottom: 40px; 
     right: 0;
-    width: 300px; 
+    width: 300px;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
     gap: 15px;
     padding: 10px;
     background: rgba(0, 0, 0, 0.2);
-    box-shadow: -2px 0 10px rgba(0,0,0,0.4);
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.4);
     z-index: 2;
-  }
-  
-  .feature {
+}
+
+.feature {
     border-radius: 10px;
-    background: #272829; 
+    background: #272829;
     box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2);
     color: #ffffff;
     font-family: 'Trebuchet MS', sans-serif;
@@ -168,66 +173,50 @@ body {
     text-shadow: 0 0 5px #5a5e9a;
     padding: 15px;
     transition: transform 0.3s ease-in-out;
-  }
-  
-  .feature:hover {
+}
+
+.feature:hover {
     transform: scale(1.05);
     box-shadow: 0 6px 12px #5a5e9a;
-  }
-  
-
-footer {
-    background: #5a5e9a;
-    color: white;
-    text-align: center;
-    padding: 15px 10px;
-    font-weight: bold;
-    text-transform: uppercase;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    z-index: 2;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 40px;
 }
+
 
 
 
 .main-content {
     margin-left: 75px;
-    margin-top: 60px; 
+    margin-top: 60px;
     margin-bottom: 60px;
     padding: 20px;
-    min-height: calc(100vh - 120px); 
+    min-height: calc(100vh - 120px);
     overflow-x: hidden;
 }
 
- @media (max-width: 575.98px) {
-    .sidebar{
+@media (max-width: 575.98px) {
+    .sidebar {
         display: none;
-    } 
-    .topbar{
+    }
+
+    .topbar {
         visibility: hidden
     }
 }
 
- @media (min-width: 576px) and (max-width: 767.98px) { 
-    .sidebar{
+@media (min-width: 576px) and (max-width: 767.98px) {
+    .sidebar {
         display: none;
-    } 
-    .topbar{
+    }
+
+    .topbar {
         visibility: hidden
     }
 }
 
 
-  .butt {
+.butt {
     width: 100%;
     padding: 12px;
-    background:#5a5e9a;
+    background: #5a5e9a;
     color: white;
     font-size: 1rem;
     font-weight: bold;
@@ -242,12 +231,15 @@ footer {
     background: #4a4f9e;
 
 }
+
 .gallery-container {
-    height: calc(100vh - 80px); /* resta el alto del navbar */
+    height: calc(100vh - 80px);
+    /* resta el alto del navbar */
     overflow-y: auto;
     padding: 1rem;
-  }
-#galeria {
+}
+
+#gallery {
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
@@ -257,32 +249,102 @@ footer {
     color: #ffffff;
 }
 
-#galeria .card {
-    max-width: 100%; /* Asegura que la tarjeta no se sobrepase */
+#gallery .card {
+    max-width: 100%;
+    /* Asegura que la tarjeta no se sobrepase */
     margin: 0.5rem;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
-    overflow: hidden; /* Evita que las imágenes se desborden de la tarjeta */
+    overflow: hidden;
+    /* Evita que las imágenes se desborden de la tarjeta */
 }
 
-#galeria .card img {
-    width: 100%;         /* La imagen ocupa todo el ancho de la tarjeta */
-    height: 200px;       /* Ajusta la altura de la imagen */
-    object-fit: cover;   /* Mantiene la proporción sin distorsionar */
+#gallery .card img {
+    width: 100%;
+    /* La imagen ocupa todo el ancho de la tarjeta */
+    height: 200px;
+    /* Ajusta la altura de la imagen */
+    object-fit: cover;
+    /* Mantiene la proporción sin distorsionar */
 }
 
 @media (max-width: 768px) {
-    #galeria {
+    #gallery {
         flex-direction: column;
         align-items: center;
     }
 
-    #galeria .card {
-        width: 100%; /* Asegura que la tarjeta ocupe el 100% del ancho en pantallas pequeñas */
+    #gallery .card {
+        width: 100%;
+        /* Asegura que la tarjeta ocupe el 100% del ancho en pantallas pequeñas */
     }
 
-    #galeria .card img {
-        height: 150px; /* Ajusta la altura de las imágenes en dispositivos más pequeños */
+    #gallery .card img {
+        height: 150px;
+        /* Ajusta la altura de las imágenes en dispositivos más pequeños */
     }
 }
 
+.content-img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.logo-circular {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid white;
+}
+
+#parent4 {
+    position: fixed;
+    top: 0;               
+    left: 0;
+    right: 0;
+    width: 100%;          
+    height: 60px;       
+    background-color: #272829;
+    border-bottom: 1px solid rgb(0, 0, 0); 
+    z-index: 999;     
+  }
+  
+  #leftbar {
+    position: fixed;
+    top: 60px; /* altura del navbar */
+    left: 0;
+    width: 260px;
+    height: calc(100% - 60px);
+    background: linear-gradient(135deg, #272829, #272829);
+    padding: 20px;
+    z-index: 2;
+  }
+  
+  @media (max-width: 767.98px) {
+    #leftbar {
+      position: relative;
+      width: 100%;
+      height: auto;
+      padding: 10px 15px 5px 15px; 
+      border-top: 1px solid #272829;
+      z-index: 2;
+    }
+  }
+  @media (max-width: 767.98px) {
+    #content {
+      margin-left: 0;
+      padding-top: 0px;
+    }
+  }
+  
+  
+  h1 {
+
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #ffffff;
+    text-shadow: 2px 3px 10px #636da6e6;
+}

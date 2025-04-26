@@ -8,18 +8,18 @@ if (!isset($_SESSION['id'])) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
-    $fotoId = $_POST['id'];
+    $photoId = $_POST['id'];
 
     $dbConfig = new DbConfig();
     $conn = $dbConfig->getConnection();
 
     // get file name
     $stmt = $conn->prepare("SELECT image_path FROM posts WHERE id = ? AND user_id = ?");
-    $stmt->execute([$fotoId, $_SESSION['id']]);
-    $foto = $stmt->fetch(PDO::FETCH_ASSOC);
+    $stmt->execute([$photoId, $_SESSION['id']]);
+    $photo = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if ($foto) {
-        $ruta = '../assets/uploads/' . $foto['image_path'];
+    if ($photo) {
+        $ruta = '../assets/uploads/' . $photo['image_path'];
 
         // delete local storage
         if (file_exists($ruta)) {
@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
 
         // delete in DB
         $stmt = $conn->prepare("DELETE FROM posts WHERE id = ?");
-        $stmt->execute([$fotoId]);
+        $stmt->execute([$photoId]);
 
         echo "Foto eliminada correctamente.";
     } else {

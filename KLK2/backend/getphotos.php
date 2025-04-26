@@ -14,11 +14,26 @@ if (!$conn) {
 $sql = "SELECT * FROM posts ORDER BY id DESC";
 $stmt = $conn->prepare($sql);
 $stmt->execute();
+$photos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-$fotos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+foreach ($photos as &$photo) {
+    $sqlComments = "SELECT COUNT(*) as total FROM comments WHERE post_id = :post_id";
+    $stmtComments = $conn->prepare($sqlComments);
+    $stmtComments->bindParam(':post_id', $photo['id']);
+    $stmtComments->execute();
+    $result = $stmtComments->fetch(PDO::FETCH_ASSOC);
+
+    $photo['comments'] = $result ? intval($result['total']) : 0;
+}
+
 
 header('Content-Type: application/json');
-echo json_encode($fotos);
+echo json_encode($photos);
 
 
 ?>
+
+    
+    
+
+

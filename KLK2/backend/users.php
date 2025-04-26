@@ -11,11 +11,9 @@ class EstaticUsers {
 
     public function createUsers() {
         $users = [
-            ["Brayan", "Ortega", "be@os.com", "12", 1, 1],
+            ["Brayan", "Ortega", "be@os.com", "12", 2, 1],
             ["Adri", "Soto", "adri@sb.com", "345", 2, 1],
             ["Kiki", "Nueve", "km9@rm.com", "mbappe", 2, 1],
-            ["admin", "klk", "admin", "1", 1, 2],
-            ["be", "os", "be", "1", 1, 2],
         ];
 
         foreach ($users as $user) {

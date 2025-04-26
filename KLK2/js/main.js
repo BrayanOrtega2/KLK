@@ -1,6 +1,4 @@
 $(document).ready(function () {
-    
-    
     // send comment
     $(document).on('click', '.comment-btn', function () {
         const photoId = $(this).data('id');
@@ -8,7 +6,11 @@ $(document).ready(function () {
         const comment = input.val().trim();
 
         if (comment === '') {
-            alert('Escribe un comentario primero');
+            Swal.fire({
+                icon: 'warning',
+                title: 'Comentario vacío',
+                text: 'Escribe un comentario antes de enviarlo.'
+            });
             return;
         }
 
@@ -19,26 +21,35 @@ $(document).ready(function () {
                 photo_id: photoId,
                 comment: comment
             },
-            dataType: 'json', 
+            dataType: 'json',
             success: function (data) {
                 if (data.success) {
                     input.val('');
-                    cargarComentarios(photoId);
+                    updateCountComments(photoId);
+                    loadComments(photoId);
 
                 } else {
-                    alert(data.message || 'Error al comentar.');
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error al comentar',
+                        text: data.message || 'Intenta nuevamente.'
+                    });
                 }
             },
             error: function (xhr, status, error) {
                 console.error(" Error en la solicitud AJAX:", xhr.responseText);
-                alert('No se pudo enviar el comentario');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'No se pudo enviar el comentario.'
+                });
             }
         });
-        
+
     });
 
     // see comments
-    $(document).on('click', '.ver-comentarios-btn', function () {
+    $(document).on('click', '.see-comments-btn', function () {
         const photoId = $(this).data('id');
         const commentsDiv = $(`#comments-${photoId}`);
 
@@ -56,7 +67,7 @@ $(document).ready(function () {
 
                 let html = '';
                 if (comments.length === 0) {
-                    html = '<div class="text-muted">No hay comentarios aún.</div>';
+                    html = '<div class="text-muted">No hay comments aún.</div>';
                 } else {
 
                     comments.forEach(c => {
@@ -70,19 +81,18 @@ $(document).ready(function () {
                 commentsDiv.html(html);
                 commentsDiv.slideDown();
             }).fail(function (jqXHR, textStatus, errorThrown) {
-                console.error("Error al obtener comentarios:", textStatus, errorThrown);
+                console.error("Error al obtener comenatarios:", textStatus, errorThrown);
                 commentsDiv.html('<div class="text-danger">Error al cargar comentarios.</div>');
                 commentsDiv.slideDown();
             });
         }
     });
-    function cargarComentarios(photoId) {
+    function loadComments(photoId) {
         const commentsDiv = $(`#comments-${photoId}`);
     
         if (commentsDiv.length === 0) return;
     
-        commentsDiv.html('<div class="text-muted">Cargando comentarios...</div>');
-    
+       
         $.getJSON(`../backend/get_comments.php?photo_id=${photoId}`, function (comments) {
             let html = '';
             if (comments.length === 0) {
@@ -90,28 +100,34 @@ $(document).ready(function () {
             } else {
                 comments.forEach(c => {
                     if (c.comment && c.comment.trim() !== "") {
-                        html += `<div class="mb-1 comment-text" >🗨️ ${c.comment}</div>`;
+                        html += `<div class="mb-1 comment-text">🗨️ ${c.comment}</div>`;
                     }
                 });
             }
     
             commentsDiv.html(html);
-            if (!commentsDiv.is(':visible')) {
-                commentsDiv.slideDown();
-            }
         }).fail(function () {
             commentsDiv.html('<div class="text-danger">Error al cargar comentarios.</div>');
         });
     }
+    
 
+    function updateCountComments(photoId) {
+        $.getJSON(`../backend/get_comments.php?photo_id=${photoId}`, function (comments) {
+            const boton = $(`.see-comments-btn[data-id="${photoId}"]`);
+            const cantidad = comments.length;
+            boton.html(`📄 Comentarios (${cantidad})`);
+        });
+    }
+    
 
     // form up photos
-    $('#mostrarFormulario').click(function () {
-        $('#formularioFoto').toggle();
+    $('#showForm').click(function () {
+        $('#formsPhotos').toggle();
     });
 
     // up img ajax
-    $('#formFoto').on('submit', function (e) {
+    $('#formPhoto').on('submit', function (e) {
         e.preventDefault();
         var formData = new FormData(this);
 
@@ -122,53 +138,59 @@ $(document).ready(function () {
             contentType: false,
             processData: false,
             success: function (response) {
-                $('#respuesta').html(response);
-                $('#formFoto')[0].reset();
-                $('#formularioFoto').hide();
-                cargarFotos(); 
+                $('#answer').html(response);
+                $('#formPhoto')[0].reset();
+                $('#formsPhotos').hide();
+                loadPhotos();
             },
             error: function () {
-                $('#respuesta').html('Error al subir la foto.');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'No se pudo subir la photo.'
+                });
+                
             }
         });
     });
-    
-    function cargarFotos() {
+
+    function loadPhotos() {
         $.ajax({
             url: '../backend/getphotos.php',
             method: 'GET',
             dataType: 'json',
-            success: function (fotos) {
-                let galeria = $('#galeria');
-                galeria.html('');
+            success: function (photos) {
+                let gallery = $('#gallery');
+                gallery.html('');
 
-                fotos.forEach(foto => {
-                    galeria.append(`
+                photos.forEach(photo => {
+                    gallery.append(`
                        <div class="d-flex justify-content-center mb-4">
                             <div class="card w-100" style="max-width: 500px;">
-                                <img src="../assets/uploads/${foto.image_path}" 
-                                    class="img-fluid rounded-top" 
+                                <img src="../assets/uploads/${photo.image_path}" 
+                                    class="img-fluid rounded-top " 
                                     style="width: 100%; height: auto; object-fit: contain;" 
-                                    alt="foto subida">
-
+                                    alt="photo subida">
+                                
                                 <div class="card-body text-center" style="background-color: #272829;">
                                     <!-- Input Comentario -->
                                     <div class="input-group mb-2">
-                                        <input type="text" class="form-control comment-input" placeholder="Escribe un comentario..." data-id="${foto.id}">
-                                        <button class="btn comment-btn text-white" data-id="${foto.id}" style="background-color: #5a5e9a;">
+                                        <input type="text" class="form-control comment-input" placeholder="Escribe un comentario..." data-id="${photo.id}">
+                                        <button class="btn comment-btn text-white" data-id="${photo.id}" style="background-color: #5a5e9a;">
                                             💬
                                         </button>
                                     </div>
 
                                     <!-- Comentarios -->
-                                    <div id="comments-${foto.id}" class="mt-2 text-start" style="display:none;"></div>
-
-                                    <!-- Botones inferiores -->
+                                    <div id="comments-${photo.id}" class="mt-2 text-start" style="display:none;"></div>
                                     <div class="d-flex justify-content-between mt-3">
-                                        <button class="btn butt btn-sm text-white ver-comentarios-btn" data-id="${foto.id}" style="background-color: #5a5e9a;">
-                                            📄 Comentarios
+                                        <button class="btn butt btn-sm text-white see-comments-btn" data-id="${photo.id}" style="background-color: #5a5e9a;">
+                                            📄 Comentarios (${photo.comments})
                                         </button>
-                                        <button class="btn butt btn-sm text-white eliminar-foto" data-id="${foto.id}" style="background-color: #5a5e9a;">
+
+
+
+                                        <button class="btn butt btn-sm text-white delete-photo" data-id="${photo.id}" style="background-color: #5a5e9a;">
                                             🗑️ Eliminar
                                         </button>
                                     </div>
@@ -176,35 +198,55 @@ $(document).ready(function () {
                             </div>
                         </div>
 
-                                            `);
+                        `);
                 });
 
 
             },
             error: function () {
-                $('#galeria').html('<p class="text-danger">Error al cargar las fotos</p>');
+                $('#gallery').html('<p class="text-danger">Error al cargar las photos</p>');
             }
         });
     }
 
 
-    $(document).on('click', '.eliminar-foto', function () {
+    $(document).on('click', '.delete-photo', function () {
         const idFoto = $(this).data('id');
 
-        if (confirm('¿Estás seguro de que deseas eliminar esta foto?')) {
-            $.ajax({
-                url: '../backend/deletephoto.php',
-                method: 'POST',
-                data: { id: idFoto },
-                success: function (response) {
-                    alert(response);
-                    cargarFotos(); 
-                },
-                error: function () {
-                    alert('Error al eliminar la foto.');
-                }
-            });
-        }
+        Swal.fire({
+            title: '¿Eliminar esta photo?',
+            text: 'Esta acción no se puede deshacer.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '../backend/deletephoto.php',
+                    method: 'POST',
+                    data: { id: idFoto },
+                    success: function (response) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Foto eliminada',
+                            text: response
+                        });
+                        loadPhotos();
+                    },
+                    error: function () {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'No se pudo delete la photo.'
+                        });
+                    }
+                });
+            }
+        });
+        
     });
-    cargarFotos();
+    loadPhotos();
 });

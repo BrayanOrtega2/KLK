@@ -47,8 +47,6 @@ class Auth {
                 $_SESSION['klk_id'] = $row['fk_klk_id'];
 
 
-
-
                 $status = "Active now";
                 $id = $row['id'];
                 $sql2 =  "UPDATE users SET statusChat =  :statusChat  WHERE id = :id";

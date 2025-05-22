@@ -30,11 +30,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
         $stmt = $conn->prepare("DELETE FROM posts WHERE id = ?");
         $stmt->execute([$photoId]);
 
-        echo "Foto eliminada correctamente.";
+        echo "image successfully deleted";
     } else {
-        echo "No tienes permiso pá";
+        echo "you don't have permission for this";
     }
 } else {
-    echo "Petición inválida.";
+    echo "invalid petition.";
 }
 ?>

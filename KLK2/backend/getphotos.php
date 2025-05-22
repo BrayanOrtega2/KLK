@@ -1,17 +1,24 @@
 <?php
-include 'config.php';
+include './config.php';
 
-// Crear instancia de la clase y obtener conexión
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+
 $dbConfig = new DbConfig();
 $conn = $dbConfig->getConnection();
 
-// Verificar si la conexión fue exitosa
 if (!$conn) {
     echo json_encode(['error' => 'No se pudo conectar a la base de datos']);
     exit;
 }
 
-$sql = "SELECT * FROM posts ORDER BY id DESC";
+// Modificar la consulta para incluir el nombre y apellido del usuario
+$sql = "SELECT p.*, u.full_name, u.last_name, u.id as user_id
+        FROM posts p
+        LEFT JOIN users u ON p.user_id = u.id
+        ORDER BY p.id DESC";
 $stmt = $conn->prepare($sql);
 $stmt->execute();
 $photos = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -26,14 +33,6 @@ foreach ($photos as &$photo) {
     $photo['comments'] = $result ? intval($result['total']) : 0;
 }
 
-
 header('Content-Type: application/json');
 echo json_encode($photos);
-
-
 ?>
-
-    
-    
-
-

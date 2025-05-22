@@ -1,0 +1,125 @@
+body {
+    background-color: #c9d6ff;
+    min-height: 100vh;                  /* Que el body ocupe mínimo toda la altura */
+    margin: 0;                         /* Quitar márgenes para que no se vea borde */
+    font-family: Arial, sans-serif;  
+    
+  }
+  
+
+  #chat-title {
+    background: #7494ec;
+    color: white;
+    padding: 8px 12px;          /* Menor padding */
+    font-size: 1em;             /* Tamaño de texto más pequeño */
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    height: 50px;               /* Altura reducida */
+}
+
+
+#chat-box {
+    flex: 1;
+    padding: 10px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    height: calc(100vh - 120px);
+    scroll-behavior: smooth;
+}
+
+#chat-box p {
+    max-width: 70%;
+    padding: 10px 15px;
+    border-radius: 20px;
+    margin: 0;
+    font-size: 14px;
+    word-wrap: break-word;
+}
+
+#chat-box p.you {
+    align-self: flex-end;
+    background-color: #7494ec; /* Color de fondo para mensajes propios */
+    color: #ffffff;
+}
+
+#chat-box p.other {
+    align-self: flex-start;
+    background-color: white; /* Color de fondo para mensajes de others */
+}
+
+#chat-form {
+    display: flex;
+    padding: 10px;
+    background: #7494ec;
+    border-top: 1px solid #ccc;
+}
+
+#message {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    font-size: 14px;
+}
+
+button[type="submit"] {
+    margin-left: 10px;
+    padding: 10px 20px;
+    background-color: #5a7bbf; /* Color del botón ajustado */
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+button[type="submit"]:hover {
+    background-color: #5a7bbf; /* Color del botón al pasar el mouse */
+}
+
+@media (max-width: 600px) {
+    #chat-box p {
+        max-width: 85%;
+        font-size: 13px;
+    }
+
+    button[type="submit"] {
+        padding: 10px 15px;
+    }
+}
+
+@media (max-width: 600px) {
+
+    #chat-title {
+      font-size: 0.9em;
+      padding: 6px 10px;
+      height: 45px;
+    }
+  
+    #chat-title i.bi-person-circle,
+    #chat-title i.bi-chevron-left {
+      font-size: 1em;
+    }
+  }
+  
+
+  #chat-title i.bi-person-circle,
+  #chat-title i.bi-chevron-left {
+      font-size: 1.2em; /* Tamaño más pequeño del ícono */
+      margin-right: 8px;
+  }
+  
+  
+  #chat-title {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Alinear a la izquierda */
+}
+.btn-link {
+    color: white; /* Color de la flecha */
+    text-decoration: none; /* Sin subrayado */
+}

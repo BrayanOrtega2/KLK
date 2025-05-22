@@ -19,4 +19,4 @@ if (isset($_GET['photo_id'])) {
     echo json_encode([]);
 }
 
-
+?>
